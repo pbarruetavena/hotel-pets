@@ -1,12 +1,14 @@
-const sequelize = require('../config/database');
-const Animal = require('./Animal');
+import sequelize from '../config/database.js';
+import Animal from "./Animal.js";
 
-const sync = async () => {
+const syncd = async () => {
     try {
+        console.log(sequelize);
         await sequelize.sync({alter: true});
+        console.log("Tabelas sincronizadas!");
     } catch(error) {
         console.log(error.message);
     }
 };
 
-module.exports = {Animal, sync};
+export default syncd;

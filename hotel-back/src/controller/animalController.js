@@ -1,6 +1,6 @@
-const animalService = require("../services/animalService");
+import animalService from '../services/animalService.js';
 
-const listAllAnimais = async (request, response) => {
+const listarAnimais = async (request, response) => {
     try {
         const animais = await animalService.listAllAnimais();
         response.json(animais);
@@ -9,7 +9,7 @@ const listAllAnimais = async (request, response) => {
     }
 };
 
-const createAnimal = async(request, response) => {
+const criarAnimal = async(request, response) => {
     try {
         const { nome, especie } = request.body;
         const animal = await animalService.createAnimal(nome, especie);
@@ -19,4 +19,4 @@ const createAnimal = async(request, response) => {
     }
 };
 
-module.exports = {listAllAnimais, createAnimal};
+export default {listarAnimais, criarAnimal};

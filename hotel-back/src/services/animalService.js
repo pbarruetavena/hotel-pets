@@ -1,4 +1,4 @@
-const animalRepository = require("../repository/animalRepository");
+import animalRepository from '../repository/animalRepository.js';
 
 const listAllAnimais = async () => {
     return await animalRepository.getAnimais();
@@ -9,4 +9,4 @@ const createAnimal = async (nome, especie) => {
     return await animalRepository.addAnimais(nome, especie);
 };
 
-module.exports = { listAllAnimais, createAnimal }
+export default { listAllAnimais, createAnimal };
