@@ -8,5 +8,7 @@ animalRouter.get("/", animalController.listarAnimais);
 //     res.send('funcionou');
 // });
 animalRouter.post("/", animalController.criarAnimal);
+animalRouter.put("/:id", animalController.atualizarAnimal);
+animalRouter.delete("/:id", animalController.apagarAnimal);
 
 export default animalRouter;

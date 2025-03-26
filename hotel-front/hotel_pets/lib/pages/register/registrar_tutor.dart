@@ -54,12 +54,6 @@ class _RegistrarTutorState extends State<RegistrarTutor> {
                     ScaffoldMessenger.of(context).showSnackBar(
                         const SnackBar(content: Text("Erro ao cadastrar.")));
                   }
-
-                  //.catchError((error) {
-                  //   ScaffoldMessenger.of(context).showSnackBar(
-                  //       const SnackBar(
-                  //           content: Text("Erro ao cadastrar!")));
-                  // });
                 },
                 child: const Text("Registrar"),
               ),

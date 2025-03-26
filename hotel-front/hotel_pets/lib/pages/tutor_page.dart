@@ -74,11 +74,18 @@ class _TutorPageState extends State<TutorPage> {
                           child: const Icon(Icons.edit),
                         ),
                         ElevatedButton(
-                          onPressed: () {
-                            controller.deleteTutor(tutor['id']);
-                            setState(() {
-                              carregarTutores();
-                            });
+                          onPressed: () async {
+                            try {
+                              await controller.deleteTutor(tutor['id']);
+                              setState(() {
+                                carregarTutores();
+                              });
+                            } catch (err) {
+                              ScaffoldMessenger.of(context).showSnackBar(
+                                  const SnackBar(
+                                      content: Text(
+                                          "Erro ao excluir. Um tutor com animais não pode ser excluído")));
+                            }
                           },
                           child: const Icon(Icons.delete),
                         ),

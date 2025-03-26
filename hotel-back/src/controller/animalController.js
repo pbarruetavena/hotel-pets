@@ -11,12 +11,36 @@ const listarAnimais = async (request, response) => {
 
 const criarAnimal = async(request, response) => {
     try {
-        const { nome, especie } = request.body;
-        const animal = await animalService.createAnimal(nome, especie);
+        const { nome, especie, raca, tutorId } = request.body;
+        const animal = await animalService.createAnimal(nome, especie, raca, tutorId);
         response.status(201).json(animal);
     } catch(error) {
         response.status(400).json({ error: error.message });
     }
 };
 
-export default {listarAnimais, criarAnimal};
+const atualizarAnimal = async (request, response) => {
+    try {
+        const {id} = request.params;
+        const dadosAtualizados = request.body;
+
+        const res = await animalService.updateAnimal(id, dadosAtualizados);
+        response.status(200).json(res);
+    } catch(err) {
+        response.status(400).json({error: err.message});
+    }
+}
+
+const apagarAnimal = async (request, response) => {
+    try {
+        const {id} = request.params;
+        const res = animalService.deleteAnimal(id);
+
+        response.status(200).json(res);
+
+    } catch(err) {
+        response.status(400).json({error: err.message});
+    }
+}
+
+export default {listarAnimais, criarAnimal, atualizarAnimal, apagarAnimal};
