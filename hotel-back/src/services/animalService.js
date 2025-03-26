@@ -5,7 +5,7 @@ const listAllAnimais = async () => {
 };
 
 const createAnimal = async (nome, especie, raca, tutorId) => {
-    if(!nome || !especie) throw new Error("Insira todos os dados");
+    if(!nome || !especie || !raca || !tutorId) throw new Error("Insira todos os dados");
     return await animalRepository.addAnimais(nome, especie, raca, tutorId);
 };
 
