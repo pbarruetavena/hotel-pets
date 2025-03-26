@@ -8,4 +8,28 @@ const addTutor = async (nome, email) => {
     return await Tutor.create({nome, email});
 };
 
-export default {getTutores, addTutor};
+const updateTutor = async (id, dadosAtualizados) => {
+    const tutor = await Tutor.findByPk(id);
+    if (!tutor) {
+        throw new Error("Tutor não encontrado");
+    }
+
+    await tutor.update(dadosAtualizados);
+    return tutor;
+};
+
+const deleteTutor = async (id) => {
+    const tutor = await Tutor.findByPk(id);
+    if (!tutor) {
+        throw new Error("Tutor não encontrado");
+    }
+
+    await tutor.destroy();
+    return { message: "Tutor removido com sucesso" };
+};
+
+const find = async (id) => {
+    return await Tutor.findByPk(id);
+}
+
+export default {getTutores, addTutor, updateTutor, deleteTutor, find};

@@ -21,4 +21,26 @@ const criarTutor = async (request, response) => {
     }
 };
 
-export default {listarTutores, criarTutor};
+const atualizarTutor = async (request, response) => {
+    try {
+        const { id } = request.params;
+        const dadosAtualizados = request.body;
+
+        const res = await tutorService.updateTutor(id, dadosAtualizados);
+        response.status(200).json(res);
+    } catch(err) {
+        response.status(400).json({error: err.message});
+    }
+};
+
+const apagarTutor = async (request, response) => {
+    try {
+        const {id} = request.params;
+        const res = tutorService.deleteTutor(id);
+        response.status(200).json(res);
+    } catch(err) {
+        response.status(400).json(res);
+    }
+}
+
+export default {listarTutores, criarTutor, atualizarTutor, apagarTutor};

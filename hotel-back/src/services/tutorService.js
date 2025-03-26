@@ -9,4 +9,12 @@ const createTutor = async (nome, email) => {
     return await tutorRepository.addTutor(nome, email);
 };
 
-export default {listAllTutores, createTutor};
+const updateTutor = async (id, dadosAtulizados) => {
+    return await tutorRepository.updateTutor(id, dadosAtulizados);
+}
+
+const deleteTutor = async (id) => {
+    return await tutorRepository.deleteTutor(id);
+}
+
+export default {listAllTutores, createTutor, updateTutor, deleteTutor};

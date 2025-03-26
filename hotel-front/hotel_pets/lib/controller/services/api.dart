@@ -20,4 +20,22 @@ class Api {
       body: jsonEncode(body),
     );
   }
+
+  Future<http.Response> putRequest(
+      String endUrl, Map<String, dynamic> body) async {
+    print(jsonEncode(body));
+    print(baseUrl + endUrl);
+    return await http.put(
+      Uri.parse(baseUrl + endUrl),
+      headers: {"Content-Type": "application/json"},
+      body: jsonEncode(body),
+    );
+  }
+
+  Future<http.Response> deleteRequest(String endUrl) async {
+    return await http.delete(
+      Uri.parse(baseUrl + endUrl),
+      headers: {"Content-Type": "application/json"},
+    );
+  }
 }
