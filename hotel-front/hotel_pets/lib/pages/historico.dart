@@ -1,5 +1,8 @@
 import 'package:flutter/material.dart';
+import 'package:hotel_pets/controller/animal_controller.dart';
+import 'package:hotel_pets/controller/tutor_controller.dart';
 import 'package:hotel_pets/pages/register/editar_estadia.dart';
+import 'package:intl/intl.dart';
 import '../controller/estadia_controller.dart';
 import './register/registrar_estadia.dart';
 
@@ -12,6 +15,8 @@ class Historico extends StatefulWidget {
 
 class _HistoricoState extends State<Historico> {
   final EstadiaController controller = EstadiaController();
+  AnimalController animalController = AnimalController();
+  TutorController tutorController = TutorController();
 
   @override
   void initState() {
@@ -21,6 +26,8 @@ class _HistoricoState extends State<Historico> {
 
   void carregarHistorico() async {
     await controller.getEstadias();
+    await animalController.getAnimais();
+    await tutorController.getTutores();
     setState(() {});
   }
 
@@ -46,10 +53,36 @@ class _HistoricoState extends State<Historico> {
               itemBuilder: (context, index) {
                 final estadia = controller.estadias[index];
 
+                Map<String, dynamic> animal =
+                    animalController.animais.firstWhere(
+                  (element) => element['id'] == estadia['animalId'],
+                  orElse: () => Map(),
+                );
+
+                Map<String, dynamic> tutor = tutorController.tutores.firstWhere(
+                  (element) => element['id'] == animal['tutorId'],
+                  orElse: () => Map(),
+                );
+
                 return ListTile(
                   // acertar o builder para uma classe separada
-                  title: Text(estadia['entrada']),
-                  subtitle: Text(estadia['saida'] ?? "Não há saída prevista"),
+                  title: Text((DateFormat('dd/MM/yyyy')
+                          .format(DateTime.parse(estadia['entrada']))) +
+                      " * " +
+                      (estadia['saida'] != null
+                          ? DateFormat('dd/MM/yyyy')
+                              .format(DateTime.parse(estadia['saida']))
+                          : "Não há saída prevista")),
+                  subtitle: Container(
+                    padding: EdgeInsets.all(10),
+                    child: Row(
+                      children: [
+                        Text(animal['nome'] + " • " + animal['especie']),
+                        Text(tutor['nome'] + " • " + tutor['email']),
+                      ],
+                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                    ),
+                  ),
                   trailing: Row(
                     mainAxisSize: MainAxisSize.min,
                     children: [

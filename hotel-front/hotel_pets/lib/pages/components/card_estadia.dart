@@ -35,7 +35,9 @@ class _CardEstadiaState extends State<CardEstadia> {
       padding: const EdgeInsets.all(12),
       margin: const EdgeInsets.symmetric(vertical: 8),
       decoration: BoxDecoration(
-        border: Border.all(color: Colors.black),
+        border: Border.all(
+            color: widget.status == "ativa" ? Colors.green : Colors.yellow,
+            width: 5),
         borderRadius: BorderRadius.circular(8),
       ),
       child: Column(

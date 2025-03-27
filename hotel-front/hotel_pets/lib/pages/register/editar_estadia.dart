@@ -50,7 +50,9 @@ class _EditarEstadiaState extends State<EditarEstadia> {
   Future<void> selecionarSaida(BuildContext context) async {
     DateTime? dataSelecionada = await showDatePicker(
       context: context,
-      initialDate: DateTime.now(),
+      initialDate: entradaController.text.isEmpty
+          ? DateTime.now()
+          : DateTime.parse(entradaController.text),
       firstDate: entradaController.text.isEmpty
           ? DateTime.now()
           : DateTime.parse(entradaController.text),

@@ -34,15 +34,20 @@ class _HomePageState extends State<HomePage> {
   }
 
   void filtrarEstadias() {
-    print('aaaaaaaaaa');
+    print('xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx');
     for (Map<String, dynamic> estadia in estadiaController.estadias) {
       print("-------------------");
       DateTime saida = DateTime.parse(
           estadia['saida'] != null ? estadia['saida'] : "1900-00-00");
-      print(saida);
+      DateTime entrada = DateTime.parse(estadia['entrada']);
       DateTime hoje = DateTime.now();
+      print(entrada);
       print(hoje);
-      if (!saida.isBefore(hoje)) {
+      print(entrada.isAfter(hoje));
+      print(saida);
+      if (!saida.isBefore(hoje) ||
+          estadia['saida'] == null ||
+          entrada.isAfter(hoje)) {
         print("é antes");
         estadias.add(estadia);
       }
@@ -104,8 +109,10 @@ class _HomePageState extends State<HomePage> {
                   emailTutor: tutor['email'],
                   entrada: DateFormat('dd/MM/yyyy')
                       .format(DateTime.parse(estadia['entrada'])),
-                  saida: DateFormat('dd/MM/yyyy')
-                      .format(DateTime.parse(estadia['saida'])),
+                  saida: estadia['saida'] != null
+                      ? DateFormat('dd/MM/yyyy')
+                          .format(DateTime.parse(estadia['saida']))
+                      : "Não há previsão de saída",
                   status: status,
                   diariasParciais: dParcial,
                   diariasTotais: dTotal,
