@@ -1,5 +1,7 @@
 import 'package:flutter/material.dart';
+import 'package:hotel_pets/pages/register/editar_estadia.dart';
 import '../controller/estadia_controller.dart';
+import './register/registrar_estadia.dart';
 
 class Historico extends StatefulWidget {
   const Historico({super.key});
@@ -30,7 +32,12 @@ class _HistoricoState extends State<Historico> {
         children: [
           const Text("Histórico"),
           ElevatedButton(
-            onPressed: () {},
+            onPressed: () {
+              Navigator.of(context)
+                  .push(MaterialPageRoute(builder: (BuildContext context) {
+                return const RegistrarEstadia();
+              }));
+            },
             child: const Text("Adicionar estadia"),
           ),
           Expanded(
@@ -47,11 +54,33 @@ class _HistoricoState extends State<Historico> {
                     mainAxisSize: MainAxisSize.min,
                     children: [
                       ElevatedButton(
-                        onPressed: () {},
+                        onPressed: () async {
+                          Navigator.of(context).push(MaterialPageRoute(
+                              builder: (BuildContext context) {
+                            return EditarEstadia(
+                              id: estadia['id'],
+                              entrada: estadia['entrada'],
+                              saida: estadia['saida'],
+                            );
+                          }));
+
+                          setState(() {
+                            carregarHistorico();
+                          });
+                        },
                         child: const Icon(Icons.edit),
                       ),
                       ElevatedButton(
-                        onPressed: () {},
+                        onPressed: () async {
+                          try {
+                            await controller.deleteEstadias(estadia['id']);
+                            setState(() {
+                              carregarHistorico();
+                            });
+                          } catch (err) {
+                            print(err);
+                          }
+                        },
                         child: const Icon(Icons.delete),
                       ),
                     ],

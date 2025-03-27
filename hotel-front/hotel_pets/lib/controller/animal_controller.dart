@@ -26,14 +26,14 @@ class AnimalController {
   Future<void> updateAnimais(int id, Map<String, dynamic> animal) async {
     final response = await api.putRequest("animal/$id", animal);
     if (response.statusCode != 200) {
-      throw Error();
+      throw Exception('Erro ao atualizar o animal');
     }
   }
 
   Future<void> deleteAnimais(int id) async {
     final response = await api.deleteRequest("animal/$id");
     if (response.statusCode != 200) {
-      throw Error();
+      throw Exception('Erro ao deletar o animal');
     }
   }
 }

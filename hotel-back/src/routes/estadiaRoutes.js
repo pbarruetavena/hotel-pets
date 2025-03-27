@@ -1,6 +1,6 @@
 import express from 'express';
 const estadiaRoutes = express.Router();
-import estadiaController from '../controller/estadiaController';
+import estadiaController from '../controller/estadiaController.js';
 
 estadiaRoutes.get("/", estadiaController.listarEstadia);
 estadiaRoutes.post("/", estadiaController.criarEstadia);

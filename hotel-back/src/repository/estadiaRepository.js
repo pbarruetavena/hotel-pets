@@ -1,4 +1,4 @@
-import Estadia from "../models/Estadia";
+import Estadia from "../models/Estadia.js";
 
 const getEstadia = async () => {
     return await Estadia.findAll();

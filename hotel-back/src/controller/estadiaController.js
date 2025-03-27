@@ -1,5 +1,5 @@
 import { response } from "express";
-import estadiaService from "../services/estadiaService";
+import estadiaService from "../services/estadiaService.js";
 
 const listarEstadia = async (request, response) => {
     try {
@@ -33,7 +33,7 @@ const atualizarEstadia = async (request, response) => {
     }
 }
 
-const apagarEstadia = async (request, params) => {
+const apagarEstadia = async (request, response) => {
     try {
         const {id} = request.params;
         const res = estadiaService.deleteEstadia(id);

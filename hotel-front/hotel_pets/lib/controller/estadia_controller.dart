@@ -23,6 +23,13 @@ class EstadiaController {
     }
   }
 
+  Future<void> updateEstadia(int id, Map<String, dynamic> estadia) async {
+    final response = await api.putRequest("estadia/$id", estadia);
+    if (response.statusCode != 200) {
+      throw Exception('Erro ao atualizar');
+    }
+  }
+
   Future<void> deleteEstadias(int id) async {
     final response = await api.deleteRequest("estadia/$id");
     if (response.statusCode != 200) {

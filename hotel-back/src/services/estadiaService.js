@@ -1,4 +1,4 @@
-import estadiaRepository from "../repository/estadiaRepository";
+import estadiaRepository from "../repository/estadiaRepository.js";
 
 const listAllEstadia = async ()=> {
     return await estadiaRepository.getEstadia();

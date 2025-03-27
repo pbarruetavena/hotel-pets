@@ -1,32 +1,34 @@
 import 'package:flutter/material.dart';
-import '../../controller/estadia_controller.dart';
-import '../../controller/animal_controller.dart';
+import 'package:hotel_pets/controller/animal_controller.dart';
+import 'package:hotel_pets/controller/estadia_controller.dart';
 import 'package:intl/intl.dart';
 
-class RegistrarEstadia extends StatefulWidget {
-  const RegistrarEstadia({super.key});
+class EditarEstadia extends StatefulWidget {
+  final int id;
+  final String entrada;
+  final String saida;
+  const EditarEstadia(
+      {super.key,
+      required this.id,
+      required this.entrada,
+      required this.saida});
 
   @override
-  State<RegistrarEstadia> createState() => _RegistrarEstadiaState();
+  State<EditarEstadia> createState() => _EditarEstadiaState();
 }
 
-class _RegistrarEstadiaState extends State<RegistrarEstadia> {
+class _EditarEstadiaState extends State<EditarEstadia> {
   final EstadiaController controller = EstadiaController();
   final AnimalController aController = AnimalController();
   final TextEditingController entradaController = TextEditingController();
   final TextEditingController saidaController = TextEditingController();
   final DateFormat dateFormat = DateFormat('yyyy-MM-dd');
-  int? selectedAnimal;
 
   @override
   void initState() {
     super.initState();
-    carregarAnimais();
-  }
-
-  void carregarAnimais() async {
-    await aController.getAnimais();
-    setState(() {});
+    entradaController.text = widget.entrada;
+    saidaController.text = widget.saida;
   }
 
   Future<void> selecionarEntrada(BuildContext context) async {
@@ -73,7 +75,7 @@ class _RegistrarEstadiaState extends State<RegistrarEstadia> {
             },
             icon: const Icon(Icons.arrow_back),
           ),
-          title: const Text("Adicionar Estadia"),
+          title: const Text("Editar Estadia"),
         ),
         body: Padding(
           padding: const EdgeInsets.all(16),
@@ -101,26 +103,12 @@ class _RegistrarEstadiaState extends State<RegistrarEstadia> {
                   selecionarSaida(context);
                 },
               ),
-              DropdownButtonFormField<int>(
-                items: aController.animais.map((animal) {
-                  return DropdownMenuItem<int>(
-                    value: animal['id'],
-                    child: Text(animal['nome']),
-                  );
-                }).toList(),
-                onChanged: (value) {
-                  setState(() {
-                    selectedAnimal = value;
-                  });
-                },
-              ),
               ElevatedButton(
                 onPressed: () async {
                   try {
-                    controller.createEstadia({
+                    controller.updateEstadia(widget.id, {
                       'entrada': entradaController.text,
                       'saida': saidaController.text,
-                      'animalId': selectedAnimal,
                     });
                     Navigator.of(context).pop();
                   } catch (error) {
