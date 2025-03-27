@@ -5,7 +5,7 @@ const listAllEstadia = async ()=> {
 }
 
 const createEstadia = async (entrada, saida, animalId) => {
-    if(!entrada || !saida || !animalId) throw new Error("Insita todos os dados");
+    if(!entrada || !animalId) throw new Error("Insita todos os dados");
     return await estadiaRepository.addEstadia(entrada, saida, animalId);
 }
 
