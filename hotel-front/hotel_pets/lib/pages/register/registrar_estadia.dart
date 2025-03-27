@@ -130,9 +130,15 @@ class _RegistrarEstadiaState extends State<RegistrarEstadia> {
                         'animalId': selectedAnimal,
                       });
                     }
+
+                    ScaffoldMessenger.of(context).showSnackBar(const SnackBar(
+                        content: Text("Estadia cadastrado!"),
+                        backgroundColor: Colors.green));
                     Navigator.of(context).pop();
                   } catch (error) {
-                    print(error);
+                    ScaffoldMessenger.of(context).showSnackBar(SnackBar(
+                        content:
+                            Text("Erro ao cadastrar. ${error.toString()}")));
                   }
                 },
                 child: const Text("Adicionar"),

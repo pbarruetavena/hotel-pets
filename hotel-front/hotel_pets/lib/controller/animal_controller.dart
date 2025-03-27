@@ -15,6 +15,8 @@ class AnimalController {
     } catch (e) {
       if (e is http.ClientException) {
         throw Exception('Não foi possível conectar');
+      } else {
+        rethrow;
       }
     }
   }
@@ -31,6 +33,8 @@ class AnimalController {
     } catch (e) {
       if (e is http.ClientException) {
         throw Exception('Não foi possível conectar');
+      } else {
+        rethrow;
       }
     }
   }
@@ -44,6 +48,8 @@ class AnimalController {
     } catch (e) {
       if (e is http.ClientException) {
         throw Exception('Não foi possível conectar');
+      } else {
+        rethrow;
       }
     }
   }
@@ -60,6 +66,8 @@ class AnimalController {
     } catch (e) {
       if (e is http.ClientException) {
         throw Exception('Não foi possível conectar');
+      } else {
+        rethrow;
       }
     }
   }

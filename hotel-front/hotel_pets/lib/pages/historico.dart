@@ -77,8 +77,16 @@ class _HistoricoState extends State<Historico> {
                             setState(() {
                               carregarHistorico();
                             });
+                            ScaffoldMessenger.of(context)
+                                .showSnackBar(const SnackBar(
+                              content: Text("Estadia excluída"),
+                              backgroundColor: Colors.green,
+                              duration: Duration(seconds: 2),
+                            ));
                           } catch (err) {
-                            print(err);
+                            ScaffoldMessenger.of(context).showSnackBar(SnackBar(
+                              content: Text(err.toString()),
+                            ));
                           }
                         },
                         child: const Icon(Icons.delete),

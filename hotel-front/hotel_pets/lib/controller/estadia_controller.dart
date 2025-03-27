@@ -15,6 +15,8 @@ class EstadiaController {
     } catch (e) {
       if (e is http.ClientException) {
         throw Exception('Não foi possível conectar');
+      } else {
+        rethrow;
       }
     }
   }
@@ -31,6 +33,8 @@ class EstadiaController {
     } catch (e) {
       if (e is http.ClientException) {
         throw Exception('Não foi possível conectar');
+      } else {
+        rethrow;
       }
     }
   }
@@ -44,6 +48,8 @@ class EstadiaController {
     } catch (e) {
       if (e is http.ClientException) {
         throw Exception('Não foi possível conectar');
+      } else {
+        rethrow;
       }
     }
   }
@@ -57,6 +63,8 @@ class EstadiaController {
     } catch (e) {
       if (e is http.ClientException) {
         throw Exception('Não foi possível conectar');
+      } else {
+        rethrow;
       }
     }
   }

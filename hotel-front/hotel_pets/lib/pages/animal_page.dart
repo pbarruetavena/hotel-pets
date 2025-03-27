@@ -37,6 +37,9 @@ class _AnimalPageState extends State<AnimalPage> {
                   .push(MaterialPageRoute(builder: (BuildContext context) {
                 return const RegistrarAnimal();
               }));
+              setState(() {
+                carregarAnimais();
+              });
             },
             label: const Text("Adicionar animal"),
             icon: const Icon(Icons.add),

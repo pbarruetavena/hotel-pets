@@ -20,6 +20,8 @@ class TutorController {
     } catch (e) {
       if (e is http.ClientException) {
         throw Exception('Não foi possível conectar');
+      } else {
+        rethrow;
       }
     }
   }
@@ -37,6 +39,8 @@ class TutorController {
     } catch (e) {
       if (e is http.ClientException) {
         throw Exception('Não foi possível conectar');
+      } else {
+        rethrow;
       }
     }
   }
@@ -51,6 +55,8 @@ class TutorController {
     } catch (e) {
       if (e is http.ClientException) {
         throw Exception('Não foi possível conectar');
+      } else {
+        rethrow;
       }
     }
   }
@@ -70,6 +76,8 @@ class TutorController {
     } catch (e) {
       if (e is http.ClientException) {
         throw Exception('Não foi possível conectar');
+      } else {
+        rethrow;
       }
     }
   }

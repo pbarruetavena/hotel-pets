@@ -47,8 +47,10 @@ class _RegistrarTutorState extends State<RegistrarTutor> {
                       'nome': nomeController.text,
                       'email': emailController.text,
                     });
-                    ScaffoldMessenger.of(context).showSnackBar(
-                        const SnackBar(content: Text("Tutor cadastrado!")));
+                    ScaffoldMessenger.of(context).showSnackBar(const SnackBar(
+                      content: Text("Tutor cadastrado!"),
+                      backgroundColor: Colors.green,
+                    ));
                     Navigator.of(context).pop();
                   } catch (error) {
                     ScaffoldMessenger.of(context).showSnackBar(

@@ -80,8 +80,9 @@ class _RegistrarAnimalState extends State<RegistrarAnimal> {
                       'tutorId': selectedTutor,
                     });
 
-                    ScaffoldMessenger.of(context).showSnackBar(
-                        const SnackBar(content: Text("Animal cadastrado!")));
+                    ScaffoldMessenger.of(context).showSnackBar(const SnackBar(
+                        content: Text("Animal cadastrado!"),
+                        backgroundColor: Colors.green));
                     Navigator.of(context).pop();
                   } catch (error) {
                     ScaffoldMessenger.of(context).showSnackBar(
