@@ -19,8 +19,14 @@ const updateAnimal = async (id, dadosAtualizados) => {
 const deleteAnimal = async (id) => {
     const animal = await Animal.findByPk(id);
     if(!animal) throw new Error("Animal não encontrado");
-    await animal.destroy();
-    return {message: "Animal removido com sucesso"};
+    try {
+        await animal.destroy();
+        return {message: "Animal removido com sucesso"};
+    } catch(err) {
+        if(err.name === "SequelizeForeignKeyConstraintError") {
+            return {message: "SequelizeForeignKeyConstraintError"}
+        }
+    }
 }
 
 const find = async (id) => {

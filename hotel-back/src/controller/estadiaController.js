@@ -14,6 +14,7 @@ const listarEstadia = async (request, response) => {
 const criarEstadia = async (request, response) => {
     try {
         const {entrada, saida, animalId} = request.body;
+        console.log(saida);
         const estadia = await estadiaService.createEstadia(entrada, saida, animalId);
         response.status(201).json(estadia);
     } catch (err) {

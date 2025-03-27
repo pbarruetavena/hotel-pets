@@ -117,11 +117,19 @@ class _RegistrarEstadiaState extends State<RegistrarEstadia> {
               ElevatedButton(
                 onPressed: () async {
                   try {
-                    controller.createEstadia({
-                      'entrada': entradaController.text,
-                      'saida': saidaController.text,
-                      'animalId': selectedAnimal,
-                    });
+                    if (saidaController.text == null ||
+                        saidaController.text == '') {
+                      controller.createEstadia({
+                        'entrada': entradaController.text,
+                        'animalId': selectedAnimal,
+                      });
+                    } else {
+                      controller.createEstadia({
+                        'entrada': entradaController.text,
+                        'saida': saidaController.text,
+                        'animalId': selectedAnimal,
+                      });
+                    }
                     Navigator.of(context).pop();
                   } catch (error) {
                     print(error);

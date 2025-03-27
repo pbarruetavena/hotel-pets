@@ -85,10 +85,15 @@ class _AnimalPageState extends State<AnimalPage> {
                             setState(() {
                               carregarAnimais();
                             });
+                            ScaffoldMessenger.of(context)
+                                .showSnackBar(const SnackBar(
+                              content: Text("Animal excluído"),
+                              backgroundColor: Colors.green,
+                              duration: Duration(seconds: 2),
+                            ));
                           } catch (err) {
                             ScaffoldMessenger.of(context).showSnackBar(
-                                const SnackBar(
-                                    content: Text("Erro ao excluir.")));
+                                SnackBar(content: Text(err.toString())));
                           }
                         },
                         child: const Icon(Icons.delete),

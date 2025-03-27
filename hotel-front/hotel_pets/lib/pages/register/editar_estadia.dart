@@ -28,7 +28,7 @@ class _EditarEstadiaState extends State<EditarEstadia> {
   void initState() {
     super.initState();
     entradaController.text = widget.entrada;
-    saidaController.text = widget.saida;
+    if (widget.saida != "") saidaController.text = widget.saida;
   }
 
   Future<void> selecionarEntrada(BuildContext context) async {
@@ -110,12 +110,17 @@ class _EditarEstadiaState extends State<EditarEstadia> {
                       'entrada': entradaController.text,
                       'saida': saidaController.text,
                     });
+                    ScaffoldMessenger.of(context).showSnackBar(const SnackBar(
+                      content: Text("Dados Salvos!"),
+                      backgroundColor: Colors.green,
+                    ));
                     Navigator.of(context).pop();
                   } catch (error) {
-                    print(error);
+                    ScaffoldMessenger.of(context).showSnackBar(
+                        SnackBar(content: Text(error.toString())));
                   }
                 },
-                child: const Text("Adicionar"),
+                child: const Text("Salvar"),
               ),
             ],
           ),

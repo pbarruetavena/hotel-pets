@@ -49,7 +49,7 @@ class _HistoricoState extends State<Historico> {
                 return ListTile(
                   // acertar o builder para uma classe separada
                   title: Text(estadia['entrada']),
-                  subtitle: Text(estadia['saida']),
+                  subtitle: Text(estadia['saida'] ?? "Não há saída prevista"),
                   trailing: Row(
                     mainAxisSize: MainAxisSize.min,
                     children: [
@@ -60,7 +60,7 @@ class _HistoricoState extends State<Historico> {
                             return EditarEstadia(
                               id: estadia['id'],
                               entrada: estadia['entrada'],
-                              saida: estadia['saida'],
+                              saida: estadia['saida'] ?? "",
                             );
                           }));
 

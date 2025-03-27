@@ -34,8 +34,12 @@ const atualizarAnimal = async (request, response) => {
 const apagarAnimal = async (request, response) => {
     try {
         const {id} = request.params;
-        const res = animalService.deleteAnimal(id);
+        const res = await animalService.deleteAnimal(id);
 
+        console.log(res);
+        if(res.message == "SequelizeForeignKeyConstraintError") {
+            return response.status(409).json({message: "Não foi possível apagar o animal. Tente apagar todos as estadias dependentes."});
+        }
         response.status(200).json(res);
 
     } catch(err) {

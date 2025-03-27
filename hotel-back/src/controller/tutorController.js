@@ -36,10 +36,14 @@ const atualizarTutor = async (request, response) => {
 const apagarTutor = async (request, response) => {
     try {
         const {id} = request.params;
-        const res = tutorService.deleteTutor(id);
+        const res = await tutorService.deleteTutor(id);
+
+        if(res.message == "SequelizeForeignKeyConstraintError") {
+            return response.status(409).json({message: "Não foi possível apagar o tutor. Tente apagar todos os animais dependentes."});
+        }
         response.status(200).json(res);
     } catch(err) {
-        response.status(400).json(res);
+        response.status(400).json({message: err.message});
     }
 }
 

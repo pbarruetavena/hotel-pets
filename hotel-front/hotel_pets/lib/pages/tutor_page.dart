@@ -80,11 +80,19 @@ class _TutorPageState extends State<TutorPage> {
                               setState(() {
                                 carregarTutores();
                               });
-                            } catch (err) {
                               ScaffoldMessenger.of(context).showSnackBar(
-                                  const SnackBar(
-                                      content: Text(
-                                          "Erro ao excluir. Um tutor com animais não pode ser excluído")));
+                                const SnackBar(
+                                  content:
+                                      Text('Operação realizada com sucesso!'),
+                                  backgroundColor: Colors.green,
+                                  duration: Duration(seconds: 2),
+                                ),
+                              );
+                            } catch (err) {
+                              ScaffoldMessenger.of(context)
+                                  .showSnackBar(SnackBar(
+                                content: Text(err.toString()),
+                              ));
                             }
                           },
                           child: const Icon(Icons.delete),

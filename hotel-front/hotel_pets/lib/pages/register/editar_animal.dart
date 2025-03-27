@@ -68,8 +68,10 @@ class _EditarAnimalState extends State<EditarAnimal> {
                       'especie': especieController.text,
                       'raca': racaController.text,
                     });
-                    ScaffoldMessenger.of(context).showSnackBar(
-                        const SnackBar(content: Text("Dados Salvos!")));
+                    ScaffoldMessenger.of(context).showSnackBar(const SnackBar(
+                      content: Text("Dados Salvos!"),
+                      backgroundColor: Colors.green,
+                    ));
                     Navigator.of(context).pop(true);
                   } catch (error) {
                     ScaffoldMessenger.of(context).showSnackBar(

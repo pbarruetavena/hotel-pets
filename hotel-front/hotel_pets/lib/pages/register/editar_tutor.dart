@@ -56,12 +56,14 @@ class _EditarTutorState extends State<EditarTutor> {
                       'nome': nomeController.text,
                       'email': emailController.text,
                     });
-                    ScaffoldMessenger.of(context).showSnackBar(
-                        const SnackBar(content: Text("Dados Salvos!")));
+                    ScaffoldMessenger.of(context).showSnackBar(const SnackBar(
+                      content: Text("Dados Salvos!"),
+                      backgroundColor: Colors.green,
+                    ));
                     Navigator.of(context).pop(true);
                   } catch (error) {
                     ScaffoldMessenger.of(context).showSnackBar(
-                        const SnackBar(content: Text("Erro ao salvar.")));
+                        SnackBar(content: Text(error.toString())));
                   }
                 },
                 child: const Text("Salvar"),

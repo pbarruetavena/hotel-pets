@@ -1,5 +1,5 @@
 import 'dart:convert';
-import 'package:http/http.dart';
+import 'package:http/http.dart' as http;
 
 import './services/api.dart';
 
@@ -8,41 +8,69 @@ class TutorController {
   List<Map<String, dynamic>> tutores = [];
 
   Future<void> createTutor(Map<String, dynamic> tutor) async {
-    final response = await api.postRequest("tutor", tutor);
+    try {
+      final response = await api.postRequest("tutor", tutor);
 
-    print("chegou a resposta");
-    //print(response.body);
-    //print(response.statusCode);
-    if (response.statusCode != 201) {
-      print('erro ao criar o tutor');
-      throw Error();
+      print("chegou a resposta");
+      //print(response.body);
+      //print(response.statusCode);
+      if (response.statusCode != 201) {
+        throw Exception("Erro ao criar o tutor");
+      }
+    } catch (e) {
+      if (e is http.ClientException) {
+        throw Exception('Não foi possível conectar');
+      }
     }
   }
 
   Future<void> getTutores() async {
-    final response = await api.getRequest("tutor");
+    try {
+      final response = await api.getRequest("tutor");
 
-    if (response.statusCode == 200) {
-      final List<dynamic> data = jsonDecode(response.body);
-      tutores = data.cast<Map<String, dynamic>>();
-    } else {
-      throw Exception('Erro ao buscar tutores');
+      if (response.statusCode == 200) {
+        final List<dynamic> data = jsonDecode(response.body);
+        tutores = data.cast<Map<String, dynamic>>();
+      } else {
+        throw Exception('Erro ao buscar tutores');
+      }
+    } catch (e) {
+      if (e is http.ClientException) {
+        throw Exception('Não foi possível conectar');
+      }
     }
   }
 
   Future<void> updateTutor(int id, Map<String, dynamic> tutor) async {
-    final response = await api.putRequest("tutor/${id}", tutor);
-    if (response.statusCode != 200 && response.statusCode != 201) {
-      print('erro ao salvar o tutor');
-      throw Error();
+    try {
+      final response = await api.putRequest("tutor/${id}", tutor);
+      if (response.statusCode != 200 && response.statusCode != 201) {
+        print('erro ao salvar o tutor');
+        throw Error();
+      }
+    } catch (e) {
+      if (e is http.ClientException) {
+        throw Exception('Não foi possível conectar');
+      }
     }
   }
 
   Future<void> deleteTutor(int id) async {
-    final response = await api.deleteRequest("tutor/${id}");
-    if (response.statusCode != 200) {
-      print('erro ao deletar');
-      throw Error();
+    try {
+      final response = await api.deleteRequest("tutor/${id}");
+      if (response.statusCode == 409) {
+        print("asfasfasdkfadsfjasjfnadsjfhasjdf");
+        throw Exception(
+            "Não foi possível apagar o tutor. Tente apagar todos os animais dependentes.");
+      }
+      if (response.statusCode != 200) {
+        print('erro ao deletar');
+        throw Error();
+      }
+    } catch (e) {
+      if (e is http.ClientException) {
+        throw Exception('Não foi possível conectar');
+      }
     }
   }
 }

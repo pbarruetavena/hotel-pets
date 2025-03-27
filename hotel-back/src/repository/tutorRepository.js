@@ -23,9 +23,15 @@ const deleteTutor = async (id) => {
     if (!tutor) {
         throw new Error("Tutor não encontrado");
     }
+    try {
+        await tutor.destroy();
+        return { message: "Tutor removido com sucesso" };
+    } catch(err) {
+        if(err.name === "SequelizeForeignKeyConstraintError") {
+            return {message: "SequelizeForeignKeyConstraintError"}
+        }
+    }
 
-    await tutor.destroy();
-    return { message: "Tutor removido com sucesso" };
 };
 
 const find = async (id) => {
