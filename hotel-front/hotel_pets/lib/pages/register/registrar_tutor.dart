@@ -36,14 +36,23 @@ class _RegistrarTutorState extends State<RegistrarTutor> {
                 controller: nomeController,
                 decoration: const InputDecoration(label: Text("Nome: ")),
               ),
-              TextField(
+              TextFormField(
                 controller: emailController,
                 decoration: const InputDecoration(label: Text("Email: ")),
+                validator: (value) {
+                  if (value == null) {
+                    return 'Insira um email de contato';
+                  }
+                  if (value.contains('@')) {
+                    return 'O email deve ser válido';
+                  }
+                  return null;
+                },
               ),
               ElevatedButton(
                 onPressed: () async {
                   try {
-                    controller.createTutor({
+                    await controller.createTutor({
                       'nome': nomeController.text,
                       'email': emailController.text,
                     });
@@ -53,8 +62,9 @@ class _RegistrarTutorState extends State<RegistrarTutor> {
                     ));
                     Navigator.of(context).pop();
                   } catch (error) {
+                    print('======================== entrou na catch');
                     ScaffoldMessenger.of(context).showSnackBar(
-                        const SnackBar(content: Text("Erro ao cadastrar.")));
+                        SnackBar(content: Text(error.toString())));
                   }
                 },
                 child: const Text("Registrar"),

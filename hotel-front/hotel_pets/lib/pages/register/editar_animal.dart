@@ -63,7 +63,7 @@ class _EditarAnimalState extends State<EditarAnimal> {
               ElevatedButton(
                 onPressed: () async {
                   try {
-                    controller.updateAnimais(widget.id, {
+                    await controller.updateAnimais(widget.id, {
                       'nome': nomeController.text,
                       'especie': especieController.text,
                       'raca': racaController.text,

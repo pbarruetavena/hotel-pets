@@ -52,7 +52,7 @@ class _EditarTutorState extends State<EditarTutor> {
               ElevatedButton(
                 onPressed: () async {
                   try {
-                    controller.updateTutor(widget.id, {
+                    await controller.updateTutor(widget.id, {
                       'nome': nomeController.text,
                       'email': emailController.text,
                     });

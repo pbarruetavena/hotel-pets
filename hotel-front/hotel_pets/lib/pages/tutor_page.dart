@@ -32,11 +32,14 @@ class _TutorPageState extends State<TutorPage> {
         children: [
           const Text("Tutores"),
           ElevatedButton.icon(
-            onPressed: () {
-              Navigator.of(context)
+            onPressed: () async {
+              await Navigator.of(context)
                   .push(MaterialPageRoute(builder: (BuildContext context) {
                 return const RegistrarTutor();
               }));
+              setState(() {
+                carregarTutores();
+              });
             },
             icon: const Icon(Icons.add),
             label: const Text("Adicionar Tutor"),
@@ -65,11 +68,9 @@ class _TutorPageState extends State<TutorPage> {
                                 email: tutor['email'],
                               );
                             }));
-                            if (res) {
-                              setState(() {
-                                carregarTutores();
-                              });
-                            }
+                            setState(() {
+                              carregarTutores();
+                            });
                           },
                           child: const Icon(Icons.edit),
                         ),

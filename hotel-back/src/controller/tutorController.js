@@ -13,6 +13,12 @@ const criarTutor = async (request, response) => {
     try {
         console.log(request.body);
         const {nome, email}= request.body;
+
+        if(!email.includes("@")) {
+            console.log('email invalido =============================');
+            return response.status(403).json({message: "Email inválido"});
+        }
+
         console.log(nome + '   --   ' + email + '   ---  teste')
         const tutor = await tutorService.createTutor(nome, email);
         response.status(201).json(tutor);

@@ -26,6 +26,7 @@ class _RegistrarEstadiaState extends State<RegistrarEstadia> {
 
   void carregarAnimais() async {
     await aController.getAnimais();
+    await controller.getEstadias();
     setState(() {});
   }
 
@@ -63,6 +64,49 @@ class _RegistrarEstadiaState extends State<RegistrarEstadia> {
         saidaController.text = dateFormat.format(dataSelecionada);
       });
     }
+  }
+
+  bool verificarEstadia() {
+    DateTime entrada = DateTime.parse(entradaController.text);
+    if (saidaController.text == null || saidaController.text == "") {
+      for (final estadia in controller.estadias) {
+        print('testnado');
+        if (estadia['animalId'] == selectedAnimal) {
+          if (estadia['saida'] == null) {
+            return false;
+          } else {
+            DateTime s = DateTime.parse(estadia['saida']);
+            if (s.isAfter(entrada)) {
+              return false;
+            }
+          }
+        }
+      }
+    } else {
+      DateTime saida = DateTime.parse(saidaController.text);
+      for (final estadia in controller.estadias) {
+        if (estadia['animalId'] == selectedAnimal) {
+          print('testando');
+          DateTime e = DateTime.parse(estadia['entrada']);
+          if (estadia['saida'] == null) {
+            if (!e.isAfter(saida)) {
+              return false;
+            }
+          } else {
+            DateTime s = DateTime.parse(estadia['saida']);
+            if (e.isBefore(saida) && !entrada.isAfter(s)) {
+              print("T1");
+              return false;
+            }
+            if (s.isAfter(entrada) && !saida.isBefore(e)) {
+              print("T2");
+              return false;
+            }
+          }
+        }
+      }
+    }
+    return true;
   }
 
   @override
@@ -119,14 +163,25 @@ class _RegistrarEstadiaState extends State<RegistrarEstadia> {
               ElevatedButton(
                 onPressed: () async {
                   try {
+                    if (!verificarEstadia()) {
+                      ScaffoldMessenger.of(context).showSnackBar(const SnackBar(
+                          content: Text(
+                              "A estadia gera conflito no calendário! Verifique as estadias do animal selecionado"),
+                          backgroundColor: Colors.yellow));
+                      return;
+                    }
+                    print("a");
+                    print(saidaController.text);
                     if (saidaController.text == null ||
                         saidaController.text == '') {
-                      controller.createEstadia({
+                      print("entrou na if de cima");
+                      await controller.createEstadia({
                         'entrada': entradaController.text,
                         'animalId': selectedAnimal,
                       });
                     } else {
-                      controller.createEstadia({
+                      print("entrou no if de baixo");
+                      await controller.createEstadia({
                         'entrada': entradaController.text,
                         'saida': saidaController.text,
                         'animalId': selectedAnimal,

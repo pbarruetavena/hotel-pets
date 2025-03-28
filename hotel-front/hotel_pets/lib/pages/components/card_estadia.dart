@@ -58,7 +58,7 @@ class _CardEstadiaState extends State<CardEstadia> {
               ),
               Row(
                 children: [
-                  Text(widget.nomeTutor),
+                  Text("${widget.nomeTutor} • ${widget.emailTutor}"),
                   const SizedBox(width: 4),
                   const Icon(Icons.person, size: 18),
                 ],
@@ -70,8 +70,6 @@ class _CardEstadiaState extends State<CardEstadia> {
             "${widget.especieAnimal} • ${widget.racaAnimal}",
             style: const TextStyle(fontStyle: FontStyle.italic),
           ),
-          const SizedBox(height: 4),
-          Text(widget.emailTutor),
           const SizedBox(height: 8),
           Text("Entrada: ${widget.entrada}",
               style: const TextStyle(fontWeight: FontWeight.bold)),

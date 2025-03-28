@@ -67,6 +67,46 @@ class _EditarEstadiaState extends State<EditarEstadia> {
     }
   }
 
+  bool verificarEstadia() {
+    DateTime entrada = DateTime.parse(entradaController.text);
+    if (saidaController.text == null || saidaController.text == "") {
+      for (final estadia in controller.estadias) {
+        print('testnado');
+        if (estadia['animalId'] == widget.id) {
+          if (estadia['saida'] == null) {
+            return false;
+          } else {
+            DateTime s = DateTime.parse(estadia['saida']);
+            if (s.isAfter(entrada)) {
+              return false;
+            }
+          }
+        }
+      }
+    } else {
+      DateTime saida = DateTime.parse(saidaController.text);
+      for (final estadia in controller.estadias) {
+        if (estadia['animalId'] == widget.id) {
+          DateTime e = DateTime.parse(estadia['entrada']);
+          if (estadia['saida'] == null) {
+            if (!e.isAfter(saida)) {
+              return false;
+            }
+          } else {
+            DateTime s = DateTime.parse(estadia['saida']);
+            if (e.isBefore(saida) && !entrada.isAfter(s)) {
+              return false;
+            }
+            if (s.isAfter(entrada) && !saida.isBefore(e)) {
+              return false;
+            }
+          }
+        }
+      }
+    }
+    return true;
+  }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -108,10 +148,28 @@ class _EditarEstadiaState extends State<EditarEstadia> {
               ElevatedButton(
                 onPressed: () async {
                   try {
-                    controller.updateEstadia(widget.id, {
-                      'entrada': entradaController.text,
-                      'saida': saidaController.text,
-                    });
+                    if (!verificarEstadia()) {
+                      ScaffoldMessenger.of(context).showSnackBar(const SnackBar(
+                          content: Text(
+                              "A estadia gera conflito no calendário! Verifique as estadias do animal selecionado"),
+                          backgroundColor: Colors.yellow));
+                      return;
+                    }
+                    print(saidaController.text);
+                    if (saidaController.text == null ||
+                        saidaController.text == "") {
+                      print("entrou no de cima");
+                      await controller.updateEstadia(widget.id, {
+                        'entrada': entradaController.text,
+                      });
+                    } else {
+                      print("entrou no de baixo");
+                      await controller.updateEstadia(widget.id, {
+                        'entrada': entradaController.text,
+                        'saida': saidaController.text,
+                      });
+                    }
+
                     ScaffoldMessenger.of(context).showSnackBar(const SnackBar(
                       content: Text("Dados Salvos!"),
                       backgroundColor: Colors.green,

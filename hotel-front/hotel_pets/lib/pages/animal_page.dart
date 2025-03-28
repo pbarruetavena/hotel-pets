@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:hotel_pets/controller/tutor_controller.dart';
 import '../controller/animal_controller.dart';
 import './register/registrar_animal.dart';
 import './register/editar_animal.dart';
@@ -12,6 +13,7 @@ class AnimalPage extends StatefulWidget {
 
 class _AnimalPageState extends State<AnimalPage> {
   final AnimalController controller = AnimalController();
+  final TutorController tutorController = TutorController();
 
   @override
   void initState() {
@@ -21,6 +23,7 @@ class _AnimalPageState extends State<AnimalPage> {
 
   void carregarAnimais() async {
     await controller.getAnimais();
+    await tutorController.getTutores();
     setState(() {});
   }
 
@@ -32,8 +35,8 @@ class _AnimalPageState extends State<AnimalPage> {
         children: [
           const Text("Animais"),
           ElevatedButton.icon(
-            onPressed: () {
-              Navigator.of(context)
+            onPressed: () async {
+              await Navigator.of(context)
                   .push(MaterialPageRoute(builder: (BuildContext context) {
                 return const RegistrarAnimal();
               }));
@@ -50,6 +53,11 @@ class _AnimalPageState extends State<AnimalPage> {
               itemBuilder: (context, index) {
                 final animal = controller.animais[index];
 
+                Map<String, dynamic> tutor = tutorController.tutores.firstWhere(
+                  (element) => element['id'] == animal['tutorId'],
+                  orElse: () => Map(),
+                );
+
                 return ListTile(
                   title: Text(animal['nome']),
                   subtitle: Column(
@@ -57,6 +65,7 @@ class _AnimalPageState extends State<AnimalPage> {
                     children: [
                       Text("Espécie: ${animal['especie']}"),
                       Text("Raça: ${animal['raca']}"),
+                      Text("Tutor: ${tutor['nome']} • ${tutor['email']}"),
                     ],
                   ),
                   trailing: Row(

@@ -39,11 +39,14 @@ class _HistoricoState extends State<Historico> {
         children: [
           const Text("Histórico"),
           ElevatedButton(
-            onPressed: () {
-              Navigator.of(context)
+            onPressed: () async {
+              await Navigator.of(context)
                   .push(MaterialPageRoute(builder: (BuildContext context) {
                 return const RegistrarEstadia();
               }));
+              setState(() {
+                carregarHistorico();
+              });
             },
             child: const Text("Adicionar estadia"),
           ),
@@ -68,7 +71,7 @@ class _HistoricoState extends State<Historico> {
                   // acertar o builder para uma classe separada
                   title: Text((DateFormat('dd/MM/yyyy')
                           .format(DateTime.parse(estadia['entrada']))) +
-                      " * " +
+                      " • " +
                       (estadia['saida'] != null
                           ? DateFormat('dd/MM/yyyy')
                               .format(DateTime.parse(estadia['saida']))
@@ -88,7 +91,7 @@ class _HistoricoState extends State<Historico> {
                     children: [
                       ElevatedButton(
                         onPressed: () async {
-                          Navigator.of(context).push(MaterialPageRoute(
+                          await Navigator.of(context).push(MaterialPageRoute(
                               builder: (BuildContext context) {
                             return EditarEstadia(
                               id: estadia['id'],

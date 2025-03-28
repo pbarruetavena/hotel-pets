@@ -12,8 +12,9 @@ class TutorController {
       final response = await api.postRequest("tutor", tutor);
 
       print("chegou a resposta");
-      //print(response.body);
-      //print(response.statusCode);
+      if (response.statusCode == 403) {
+        throw Exception("Insira um email válido");
+      }
       if (response.statusCode != 201) {
         throw Exception("Erro ao criar o tutor");
       }

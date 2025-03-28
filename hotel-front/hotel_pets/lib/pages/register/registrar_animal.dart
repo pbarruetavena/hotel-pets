@@ -73,7 +73,7 @@ class _RegistrarAnimalState extends State<RegistrarAnimal> {
               ElevatedButton(
                 onPressed: () async {
                   try {
-                    controller.createAnimal({
+                    await controller.createAnimal({
                       'nome': nomeController.text,
                       'especie': especieController.text,
                       'raca': racaController.text,
